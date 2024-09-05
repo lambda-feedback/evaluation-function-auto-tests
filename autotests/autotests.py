@@ -40,6 +40,7 @@ class SingleTest:
 
         # A test can be excluded from the docs at test or sub-test level
         exclude_top_level = test_dict.get("exclude_from_docs", False)
+        self.exclude_from_docs = exclude_top_level
 
         self.sub_tests = []
         if "sub_tests" in test_dict:
