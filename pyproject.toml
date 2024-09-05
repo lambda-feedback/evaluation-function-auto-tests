@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "autotests"
+version = "0.0.1"
+description = ""
+authors = ["Max Hurlow <max.hurlow22@imperial.ac.uk>"]
+readme = "README.md"
+packages = [{ include = "autotests" }]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pyyaml = "^6.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.2"
+flake8 = "^7.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
