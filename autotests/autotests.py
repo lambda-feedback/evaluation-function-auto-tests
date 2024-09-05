@@ -38,6 +38,9 @@ class SingleTest:
         self.params = test_dict.get("params", {})
         self.desc = test_dict.get("description", "")
 
+        # A test can be excluded from the docs at test or sub-test level
+        exclude_top_level = test_dict.get("exclude_from_docs", False)
+
         self.sub_tests = []
         if "sub_tests" in test_dict:
             for sub_test in test_dict["sub_tests"]:
@@ -50,6 +53,7 @@ class SingleTest:
                     sub_test.get("response", ""),
                     expected_result.get("is_correct"),
                     expected_result,
+                    exclude_top_level or sub_test.get("exclude_from_docs", False),
                 ))
         else:
             expected_result = test_dict.get("expected_result")
@@ -61,6 +65,7 @@ class SingleTest:
                 test_dict.get("response", ""),
                 expected_result.get("is_correct"),
                 expected_result,
+                exclude_top_level,
             ))
 
     def evaluate_all(self, func) -> list[dict]:
@@ -100,6 +105,7 @@ class SubTest:
     response: str
     is_correct: bool
     expected_result: dict
+    exclude_from_docs: bool
 
 
 def auto_test(path, func):

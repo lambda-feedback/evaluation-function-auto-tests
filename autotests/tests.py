@@ -93,3 +93,27 @@ tests:
         self.assertEqual(test1.answer, "foo")
         self.assertEqual(test1.sub_tests[0].response, "bar")
         self.assertEqual(test1.sub_tests[0].is_correct, False)
+
+    def test_exclude(self):
+        test_file = {}
+        try:
+            test_file = TestFile("""
+---
+title: Test Group 1
+tests:
+    - description: Test1
+      answer: "foo"
+      exclude_from_docs: yes
+      sub_tests: 
+        - response: "bar"
+          expected_result:
+            is_correct: yes
+        - response: "baz"
+          expected_result:
+            is_correct: yes
+""", "test.yaml")
+        except:
+            self.fail()
+        test = test_file.groups[0]["tests"][0]
+        self.assertTrue(test.sub_tests[0].exclude_from_docs)
+        self.assertTrue(test.sub_tests[1].exclude_from_docs)
