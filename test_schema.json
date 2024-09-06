@@ -1,0 +1,76 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "title": "Tests",
+    "description": "Describes the tests that can be run on an evaluation function",
+    "type": "object",
+    "properties": {
+        "title": {
+            "description": "The title of the test group",
+            "type": "string"
+        },
+        "tests": {
+            "description": "An array of tests to run",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "description": "The purpose of this test",
+                        "type": "string"
+                    },
+                    "params": {
+                        "description": "Additional parameters that can be passed to the eval function",
+                        "type": "object"
+                    },
+                    "answer": {
+                        "description": "The correct answer given to the function",
+                        "type": "string"
+                    },
+                    "response": {
+                        "description": "If sub-tests are not used, this response will be given to the function",
+                        "type": "string"
+                    },
+                    "expected_result": {
+                        "description": "If sub-tests are not used, these expected results will be tested against the function output",
+                        "type": "object",
+                        "properties": {
+                            "is_correct": {
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [ "is_correct" ]
+                    },
+                    "sub_tests": {
+                        "description": "Sub-tests can be defined that share the same answer and params",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "description": {
+                                    "type": "string"
+                                },
+                                "response": {
+                                    "type": "string"
+                                },
+                                "expected_result": {
+                                    "description": "If sub-tests are not used, these expected results will be tested against the function output",
+                                    "type": "object",
+                                    "properties": {
+                                        "is_correct": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "required": [ "is_correct" ]
+                                }
+                            },
+                            "required": [ "response", "expected_result" ]
+                        }
+                    }
+                },
+                "required": [ "description", "answer" ]
+            },
+            "minItems": 1
+        }
+    },
+    "required": [ "title", "tests" ]
+}
