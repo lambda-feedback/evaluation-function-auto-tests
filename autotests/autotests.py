@@ -25,7 +25,7 @@ class TestFile:
                         
                         tests.append(SingleTest(test))
 
-                    self.groups.append({"title": title, "tests": tests})
+                    self.groups.append(Group(title, tests))
             except yaml.YAMLError as e:
                 raise Exception(f'Error parsing YAML: {e}')
         else:
@@ -109,6 +109,12 @@ class SubTest:
     exclude_from_docs: bool
 
 
+@dataclass
+class Group:
+    title: str
+    tests: list[SingleTest]
+
+
 def auto_test(path, func):
     """A decorator that adds the necessary infrastructure to run tests defined
     in an external data file.\n
@@ -128,7 +134,7 @@ def auto_test(path, func):
 
             # Successfully loaded 
             for group in tests.groups:
-                for test in group["tests"]:
+                for test in group.tests:
                     results = test.evaluate_all(func)
                     self.assertTrue(*test.compare_all(map(lambda r: r.to_dict(), results)))
 

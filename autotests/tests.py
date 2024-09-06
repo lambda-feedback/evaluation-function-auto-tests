@@ -20,7 +20,7 @@ tests:
         except:
             self.fail()
         
-        test1 = test_file.groups[0]["tests"][0]
+        test1 = test_file.groups[0].tests[0]
         self.assertEqual(test1.answer, "foo")
         self.assertEqual(test1.sub_tests[0].response, "bar")
         self.assertEqual(test1.sub_tests[0].is_correct, True)
@@ -59,7 +59,7 @@ tests:
         except:
             self.fail()
         
-        test1 = test_file.groups[0]["tests"][0]
+        test1 = test_file.groups[0].tests[0]
         self.assertEqual(len(test1.sub_tests), 2)
         self.assertEqual(test1.sub_tests[0].response, "bar")
         self.assertEqual(test1.sub_tests[1].response, "baz")
@@ -88,8 +88,8 @@ tests:
         except:
             self.fail()
         
-        self.assertEqual(test_file.groups[1]["title"], "Test Group 2")
-        test1 = test_file.groups[1]["tests"][0]
+        self.assertEqual(test_file.groups[1].title, "Test Group 2")
+        test1 = test_file.groups[1].tests[0]
         self.assertEqual(test1.answer, "foo")
         self.assertEqual(test1.sub_tests[0].response, "bar")
         self.assertEqual(test1.sub_tests[0].is_correct, False)
@@ -114,6 +114,6 @@ tests:
 """, "test.yaml")
         except:
             self.fail()
-        test = test_file.groups[0]["tests"][0]
+        test = test_file.groups[0].tests[0]
         self.assertTrue(test.sub_tests[0].exclude_from_docs)
         self.assertTrue(test.sub_tests[1].exclude_from_docs)
