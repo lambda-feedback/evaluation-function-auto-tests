@@ -1,7 +1,6 @@
 # Autotests
 
-This library, built for Lambda Feedback, allows tests defined in a config file
-to be run on evaluation functions. It is also used by [EvalDocsLoader](https://github.com/lambda-feedback/EvalDocsLoader/)
+This library, built for [Lambda Feedback](https://www.lambdafeedback.com/), allows tests defined in a config file to be run on evaluation functions. It is also used by [EvalDocsLoader](https://github.com/lambda-feedback/EvalDocsLoader/)
 to auto-generate examples for the documentation.
 
 ## Usage
@@ -29,7 +28,7 @@ tests:
     # expected_result is compared against the output of evaluation_function
     # Only is_correct is required, any other fields will be tested only if present
     expected_result:
-      is_correct: yes
+      is_correct: true
       response_latex: "x + y"
 
   - description: > 
@@ -38,7 +37,7 @@ tests:
     answer: "x + y"
     response: "x - (-y)"
     expected_result:
-      is_correct: yes
+      is_correct: true
 # Tests can be divided into groups using '---'
 ---
 # This illustrates how sub-tests can be used to share the same answer and parameters
@@ -51,13 +50,22 @@ tests:
       - description: Sub-test 1
         response: "x*y"
         expected_result:
-          is_correct: yes
+          is_correct: true
       - description: Sub-test 2
         response: "xy"
         expected_result:
-          is_correct: yes
-
+          is_correct: true
+      # If a sub-test has no description, it "inherits" the description of the previous test.
+      # When EvalDocsLoader generates examples, it combines these sub-tests with the previous
+      # test in one table.
+      - response: "(x)(y)"
+        expected_result:
+          is_correct: true
 ```
+
+A JSON schema for this format is given in `test_schema.json`. This can be used to provide
+autocompletion and some basic error detection in your IDE. This has been tested in VSCode 
+using the [YAML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml) extension.
 
 ### Integrating with existing unit tests
 
